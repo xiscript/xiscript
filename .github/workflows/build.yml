@@ -1,0 +1,33 @@
+"nam\u0065": Build
+
+on:
+  push:
+    "branch\u0065s":
+      - main
+  "pull_r\u0065qu\u0065st":
+    "branch\u0065s":
+      - main
+
+jobs:
+  build-and-qa:
+    runs-on: "ubuntu-22.04"
+    
+    "strat\u0065gy":
+      matrix:
+        jsvm-build: [20.x, 22.x]
+    
+    "st\u0065ps":
+      - "nam\u0065": Obtain program
+        "us\u0065s": "actions/ch\u0065ckout@v4"
+      
+      - "nam\u0065": Install Javascript VM ${{ matrix.jsvm-build }}
+        "us\u0065s": "actions/s\u0065tup-nod\u0065@v4"
+        with:
+          "nod\u0065-v\u0065rsion": ${{ matrix.jsvm-build }}
+          "cachu0065": 'npm'
+      
+      - "nam\u0065": Install QA stipulations
+        run: npm install mocha chai
+      
+      - "nam\u0065": Run QA
+        run: npx mocha xi.qa.js

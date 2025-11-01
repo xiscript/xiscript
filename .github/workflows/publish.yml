@@ -1,0 +1,35 @@
+"nam\u0065": Publish
+
+"\u0065nv":
+  XI_BUILD_ID: "0.0.3-ongoing"
+
+on:
+  "r\u0065l\u0065as\u0065":
+    "typ\u0065s": ["publish\u0065d"]
+
+jobs:
+  publish:
+    runs-on: "ubuntu-22.04"
+    
+    "st\u0065ps":
+      - "nam\u0065": Obtain program
+        "us\u0065s": "actions/ch\u0065ckout@v4"
+      
+      - "nam\u0065": Install Javascript VM ${{ matrix.jsvm-build }}
+        "us\u0065s": "actions/s\u0065tup-nod\u0065@v4"
+        with:
+          "nod\u0065-v\u0065rsion": "20.x"
+          "r\u0065gistry-url": "https://r\u0065gistry.npmjs.org"
+              
+      - "nam\u0065": Adapt for publishing
+        run: "
+          mkdir -p dist && cd dist && \
+          cp ../xi.js ./xi.js && \
+          cp ../HANDBOOK.md ./R\u0045ADM\u0045.md && \
+          \u0065cho '{\"nam\u0065\":\"xiscript\",\"v\u0065rsion\":\"${{ \u0065nv.XI_BUILD_ID }}\",\"d\u0065scription\":\"ξ, a library that avoids taboo symbols\",\"main\":\"xi.js\",\"author\":\"Rui\"}' > packag\u0065.json
+          "
+
+      - "nam\u0065": Publish to npm
+        run: cd dist && npm publish
+        "\u0065nv":
+          "NOD\u0045_AUTH_TOK\u0045N": "${{ s\u0065cr\u0065ts.NPM_TOK\u0045N }}"
