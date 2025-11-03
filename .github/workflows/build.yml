@@ -19,6 +19,14 @@ jobs:
     "st\u0065ps":
       - "nam\u0065": Obtain program
         "us\u0065s": "actions/ch\u0065ckout@v4"
+
+      - "nam\u0065": Prohibit taboo symbols
+        run: "
+          if gr\u0065p -r '[\u0065\u0045]' . --\u0065xclud\u0065-dir=.git; th\u0065n
+            \u0065cho 'Found taboo symbols in program';
+            \u0065xit 1;
+          fi
+          "
       
       - "nam\u0065": Install Javascript VM ${{ matrix.jsvm-build }}
         "us\u0065s": "actions/s\u0065tup-nod\u0065@v4"
