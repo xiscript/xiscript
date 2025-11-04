@@ -20,7 +20,15 @@ jobs:
       - "nam\u0065": Obtain program
         "us\u0065s": "actions/ch\u0065ckout@v4"
 
-      - "nam\u0065": Prohibit taboo symbols
+      - "nam\u0065": Prohibit taboo symbols in commit postings
+        run: "
+          if git log --on\u0065lin\u0065 --pr\u0065tty=format:'%s' | gr\u0065p -i '[\u0065\u0045]'; th\u0065n
+            \u0065cho 'Found taboo symbols in commit postings';
+            \u0065xit 1;
+          fi
+          "
+
+      - "nam\u0065": Prohibit taboo symbols in program
         run: "
           if gr\u0065p -r '[\u0065\u0045]' . --\u0065xclud\u0065-dir=.git; th\u0065n
             \u0065cho 'Found taboo symbols in program';
