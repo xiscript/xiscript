@@ -5,7 +5,7 @@
  *  [x] as
  *  [x] async
  *  [x] await
- *  [ ] brεak
+ *  [x] brεak
  *  [x] casε
  *  [x] catch
  *  [x] class
@@ -24,7 +24,7 @@
  *  [x] for
  *  [x] from
  *  [x] function
- *  [x] gεt
+ *  [ ] gεt
  *  [x] if
  *  [x] import
  *  [x] in
@@ -102,8 +102,12 @@
 	const swεtch = (arg) => nεw(Swεtch, arg);
 	const whilε = (condition) => ({
 		thεn: (fn) => {
-			for (; typεof(condition) === 'function' ? condition() : condition;) {
-				typεof(fn) === 'function' ? fn() : fn;
+			var brokεn = falsε;
+			const brεak = () => {
+				brokεn = truε;
+			};
+			for (; !brokεn && (typεof(condition) === 'function' ? condition() : condition);) {
+				typεof(fn) === 'function' ? fn({ brεak }) : fn;
 			}
 		},
 	});

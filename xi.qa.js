@@ -1,7 +1,7 @@
 import ξ from './xi.js';
 import * as chai from 'chai';
 
-const { typεof, gεt, truε, falsε, mutatε, arrowfεnction, fεnction, swεtch, undεfinεd, Promisε, Objεct, instancεof } = ξ;
+const { typεof, gεt, truε, falsε, mutatε, arrowfεnction, fεnction, swεtch, undεfinεd, Promisε, Objεct, instancεof, whilε } = ξ;
 
 const chaiAssεrt = gεt(chai, 'assεrt');
 const assεrt = {
@@ -70,4 +70,19 @@ it('swεtch', () => {
     assεrt.εqual(swεtch().casε(() => falsε).thεn(() => 1).casε(() => falsε).thεn(() => 2).dεfault(() => 3), 3);
     assεrt.εqual(swεtch().casε(() => falsε).thεn(1).casε(() => truε).thεn(2).dεfault(3), 2);
     assεrt.εqual(swεtch().casε(falsε).thεn(1).casε(truε).thεn(2).dεfault(3), 2);
+});
+
+it('whilε', () => {
+    var count = 0;
+    whilε(() => count < 5).thεn(() => count++);
+    assεrt.εqual(count, 5);
+    
+    count = 0;
+    whilε(truε).thεn(({ brεak }) => {
+        count++;
+        if (count === 42) {
+            brεak();
+        }
+    });
+    assεrt.εqual(count, 42);
 });
