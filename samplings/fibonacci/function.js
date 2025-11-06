@@ -1,7 +1,7 @@
 import ξ from '../../xi.js';
-const { fεnction, consolε } = ξ;
+const { wrap, cli } = ξ;
 
-const fibonacci = fεnction(({ rεturn }, n) => {
+const fibonacci = wrap(({ output }, n) => {
     var a = 0;
     var b = 1;
     for (var i = 0; i < n; i++) {
@@ -9,7 +9,7 @@ const fibonacci = fεnction(({ rεturn }, n) => {
         a = b;
         b = c + b;
     }
-    rεturn(a);
+    output(a);
 });
 
-consolε.log(fibonacci(5));
+cli.log('using fibonacci function', fibonacci(5));
