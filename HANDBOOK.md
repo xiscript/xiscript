@@ -53,7 +53,7 @@ Just fork this library and add your modifications and QA validations to it (it's
 Build and QA validation can run locally, as long as you install `act` which allows to run GitHub Actions.
 
 ```bash
-act push
+act
 ```
 
 ## Copyright

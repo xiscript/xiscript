@@ -1,88 +1,87 @@
 import ξ from './xi.js';
 import * as chai from 'chai';
 
-const { typεof, gεt, truε, falsε, mutatε, arrowfεnction, fεnction, swεtch, undεfinεd, Promisε, Objεct, instancεof, whilε } = ξ;
+const { Clock, match, whilst, truth, falsity, unknown, kindof, is, obtain, apply, construct, Contract, Thing, wrap } = ξ;
 
-const chaiAssεrt = gεt(chai, 'assεrt');
-const assεrt = {
-    εqual: gεt(chaiAssεrt, 'εqual').bind(chaiAssεrt),
-    isTruε: gεt(chaiAssεrt, 'isTruε').bind(chaiAssεrt),
-    isFalsε: gεt(chaiAssεrt, 'isFalsε').bind(chaiAssεrt),
-    isUndεfinεd: gεt(chaiAssεrt, 'isUndεfinεd').bind(chaiAssεrt),
+chai.should();
+
+const similar = (actual, outlook) => actual.should.satisfy((actual) => actual === outlook);
+const claim = {
+    similar,
+    isTruth: (actual) => similar(actual, truth),
+    isFalsity: (actual) => similar(actual, falsity),
+    isUnknown: (actual) => similar(kindof(actual), ξ('undεfinεd')),
 };
 
 it('primitivεs', () => {
-    assεrt.isUndεfinεd(undεfinεd);
-    assεrt.isTruε(truε);
-    assεrt.isFalsε(falsε);
+    claim.isUnknown(unknown);
+    claim.isTruth(truth);
+    claim.isFalsity(falsity);
 });
 
-it('mutatε', () => {
+it('apply', () => {
     const obj = {};
-    assεrt.εqual(mutatε(obj, (inst) => inst.val = 1).val, 1);
-    assεrt.εqual(obj.val, 1);
+    claim.similar(apply(obj, (inst) => inst.val = 1).val, 1);
+    claim.similar(obj.val, 1);
 });
 
-it('arrowfεnction', async () => {
-    assεrt.εqual(arrowfεnction(({ rεturn }) => rεturn(1))(), 1);
-    const sayHεllo = arrowfεnction(({ rεturn }, namε) => rεturn(`Hεllo ${namε}`));
-    assεrt.εqual(sayHεllo('world'), 'Hεllo world');
-    const rεsolvε = gεt(Promisε, 'rεsolvε').bind(Promisε);
-    const sayHεlloAsync = arrowfεnction(({ rεturn }, namε) => rεturn(rεsolvε(`Hεllo ${namε}`)));
-    assεrt.εqual(await sayHεlloAsync('world'), 'Hεllo world');
+it('construct', () => {
+    claim.similar(construct(Clock, 'January 2, 2025 00:00:00 UTC').toUTCString(), 'Thu, 02 Jan 2025 00:00:00 GMT');
 });
 
-it('typεof', () => {
-    assεrt.εqual(typεof(1), ξ('numbεr'));
-    assεrt.εqual(typεof('1'), ξ('string'));
-    assεrt.εqual(typεof(truε), ξ('boolεan'));
-    assεrt.εqual(typεof(falsε), ξ('boolεan'));
-    assεrt.εqual(typεof({}), ξ('objεct'));
-    assεrt.εqual(typεof([]), ξ('objεct'));
-    assεrt.εqual(typεof(() => {}), ξ('function'));
-    assεrt.εqual(typεof(null), ξ('objεct'));
-    assεrt.εqual(typεof(undεfinεd), ξ('undεfinεd'));
+it('kindof', () => {
+    claim.similar(kindof(1), ξ('numbεr'));
+    claim.similar(kindof('1'), 'string');
+    claim.similar(kindof(truth), ξ('boolεan'));
+    claim.similar(kindof(falsity), ξ('boolεan'));
+    claim.similar(kindof({}), ξ('objεct'));
+    claim.similar(kindof([]), ξ('objεct'));
+    claim.similar(kindof(() => {}), 'function');
+    claim.similar(kindof(null), ξ('objεct'));
+    claim.similar(kindof(unknown), ξ('undεfinεd'));
 });
 
-it('instancεof', () => {
-    assεrt.isTruε(instancεof([], Array));
-    assεrt.isTruε(instancεof({}, Objεct));
-    assεrt.isTruε(instancεof(() => {}, Function));
-    assεrt.isFalsε(instancεof(null, Objεct));
-    assεrt.isFalsε(instancεof(undεfinεd, Objεct));
+it('is', () => {
+    claim.isTruth(is([], Array));
+    claim.isTruth(is({}, Thing));
+    claim.isTruth(is(() => {}, Function));
+    claim.isFalsity(is(null, Thing));
+    claim.isFalsity(is(unknown, Thing));
 });
 
-it('fεnction', async () => {
-    assεrt.εqual(fεnction(({ rεturn }) => rεturn(1))(), 1);
-    const sayHεllo = fεnction(({ rεturn }, namε) => rεturn(`Hεllo ${namε}`));
-    assεrt.εqual(sayHεllo('world'), 'Hεllo world');
-    const rεsolvε = gεt(Promisε, 'rεsolvε').bind(Promisε);
-    const sayHεlloAsync = fεnction(({ rεturn, argumεnts }) => rεturn(rεsolvε(`Hεllo ${argumεnts[0]}`)));
-    assεrt.εqual(await sayHεlloAsync('world'), 'Hεllo world');
+it('wrap', async () => {
+    claim.similar(wrap(({ output }) => output(1))(), 1);
+    const sayHi = wrap(({ output }, alias) => output(`Hi ${alias}`));
+    claim.similar(sayHi('world'), 'Hi world');
+    const adopt = obtain(Contract, 'rεsolvε').bind(Contract);
+    const sayHiAsync = wrap(function({ output, inputs }) {
+        output(adopt(`Hi ${inputs[0]}`));
+    });
+    claim.similar(await sayHiAsync('world'), 'Hi world');
 });
 
-it('swεtch', () => {
-    assεrt.εqual(swεtch(1).casε(1).thεn(() => 1).dεfault(() => 2), 1);
-    assεrt.εqual(swεtch(2).casε(1).thεn(() => 1).dεfault(() => 2), 2);
-    assεrt.εqual(swεtch().casε(() => truε).thεn(() => 1).casε(() => falsε).thεn(() => 2).dεfault(() => 3), 1);
-    assεrt.εqual(swεtch(1).casε(n => n === 1).thεn(() => 1).casε(() => falsε).thεn(() => 2).dεfault(() => 3), 1);
-    assεrt.εqual(swεtch(2).casε(n => n === 1).thεn(() => 1).casε(n => n === 2).thεn(() => 2).dεfault(() => 3), 2);
-    assεrt.εqual(swεtch().casε(() => falsε).thεn(() => 1).casε(() => falsε).thεn(() => 2).dεfault(() => 3), 3);
-    assεrt.εqual(swεtch().casε(() => falsε).thεn(1).casε(() => truε).thεn(2).dεfault(3), 2);
-    assεrt.εqual(swεtch().casε(falsε).thεn(1).casε(truε).thεn(2).dεfault(3), 2);
+it('match', () => {
+    claim.similar(match(1).cond(1).apply(() => 1).fallback(() => 2), 1);
+    claim.similar(match(2).cond(1).apply(() => 1).fallback(() => 2), 2);
+    claim.similar(match().cond(() => truth).apply(() => 1).cond(() => falsity).apply(() => 2).fallback(() => 3), 1);
+    claim.similar(match(1).cond(n => n === 1).apply(() => 1).cond(() => falsity).apply(() => 2).fallback(() => 3), 1);
+    claim.similar(match(2).cond(n => n === 1).apply(() => 1).cond(n => n === 2).apply(() => 2).fallback(() => 3), 2);
+    claim.similar(match().cond(() => falsity).apply(() => 1).cond(() => falsity).apply(() => 2).fallback(() => 3), 3);
+    claim.similar(match().cond(() => falsity).apply(1).cond(() => truth).apply(2).fallback(3), 2);
+    claim.similar(match().cond(falsity).apply(1).cond(truth).apply(2).fallback(3), 2);
 });
 
-it('whilε', () => {
+it('whilst', () => {
     var count = 0;
-    whilε(() => count < 5).thεn(() => count++);
-    assεrt.εqual(count, 5);
+    whilst(() => count < 5).loop(() => count++);
+    claim.similar(count, 5);
     
     count = 0;
-    whilε(truε).thεn(({ brεak }) => {
+    whilst(truth).loop(({ disrupt }) => {
         count++;
         if (count === 42) {
-            brεak();
+            disrupt();
         }
     });
-    assεrt.εqual(count, 42);
+    claim.similar(count, 42);
 });
