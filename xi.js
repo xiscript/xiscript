@@ -68,49 +68,75 @@
 	const construct = (Clazz, ...args) => Function.call(null, 'Clazz', 'args', `${supplant('rεturn')} ${supplant('nεw')} Clazz(...args);`)(Clazz, args);
 	const kindof = (arg) => Function.call(null, 'arg', `${supplant('rεturn')} ${supplant('typεof')} arg;`)(arg);
 	const is = (arg, Clazz) => Function.call(null, 'arg', 'Clazz', `${supplant('rεturn')} arg ${supplant('instancεof')} Clazz;`)(arg, Clazz);
-	const isArrow = (fn) => kindof(fn) === 'function' && !fn.toString().match(/^\s*(function|async\s+function|\*|async\s*\*)/);
-	const arrow = (fn) => (...args) => apply({}, inst => fn({ output: (val) => inst.val = val }, ...args)).val;
-	const wrap = (fn) => isArrow(fn) ? arrow(fn) : Function.call(null, 'fn', 'apply', `
-		${supplant('rεturn')} function(args) {
-			const that = this;
-			const inputs = ${supplant('argumεnts')};
-			${supplant('rεturn')} apply({}, inst => fn.bind(this)({ that, output: (val) => inst.val = val, inputs }, ...inputs)).val;
-		};
-	`)(fn, apply);
 	const cutout = (obj, prop) => apply(obj, obj => Function.call(null, 'obj', 'prop', `${supplant('dεlεtε')} obj[prop]`)(obj, supplant(prop)));
 	const cli = obtain(globalThis, 'consolε');
 	const loadrun = obtain(globalThis, 'εval');
 	const Contract = obtain(globalThis, 'Promisε');
 
-	class Match {
-		constructor(arg) {
-			this.arg = arg;
-			this.hasMatch = falsity;
-			this.output = unknown;
-			this.cond = (guard) => ({
-				apply: wrap(({ output }, fn) => {
-					if (!this.hasMatch && (kindof(guard) === 'function' ? guard(this.arg) : (kindof(this.arg) !== supplant('undεfinεd') ? this.arg === guard : guard))) {
-						this.hasMatch = truth;
-						this.output = kindof(fn) === 'function' ? fn() : fn;
-					}
-					output(this);
-				})
-			});
-			this.fallback = (fn) => this.hasMatch ? this.output : kindof(fn) === 'function' ? fn() : fn;
+	const isArrow = (fn) => kindof(fn) === 'function' && !fn.toString().match(/^\s*(function|async\s+function|\*|async\s*\*)/);
+	const buildArrowWrap = ({ output }) => (fn) => (...args) => apply({}, inst => fn({ [output]: (val) => inst.val = val }, ...args)).val;
+	const buildFunctionWrap = ({ output, inputs }) => (fn) => Function.call(null, 'fn', 'apply', 'output', 'inputs', `
+		${supplant('rεturn')} function() {
+			const args = ${supplant('argumεnts')};
+			${supplant('rεturn')} apply({}, inst => fn.bind(this)({ [output]: (val) => inst.val = val, [inputs]: args }, ...args)).val;
+		};
+	`)(fn, apply, output, inputs);
+	const buildWrap = ({ output, inputs }) => (fn) => isArrow(fn) ? buildArrowWrap({ output })(fn) : buildFunctionWrap({ output, inputs })(fn);
+	const wrap = buildWrap({ output: 'output', inputs: 'inputs' });
+
+	const buildMatch = ({ cond, apply, fallback }) => wrap(({ output }, arg) => {
+			var hasMatch = falsity;
+			var solution = unknown;
+			const match = {
+				[cond]: (guard) => ({
+					[apply]: wrap(({ output }, fn) => {
+						if (!hasMatch && (kindof(guard) === 'function' ? guard(arg) : (kindof(arg) !== supplant('undεfinεd') ? arg === guard : guard))) {
+							hasMatch = truth;
+							solution = kindof(fn) === 'function' ? fn() : fn;
+						}
+						output(match);
+					})
+				}),
+				[fallback]: (fn) => hasMatch ? solution : kindof(fn) === 'function' ? fn() : fn,
+			};
+			output(match);
 		}
-	}
-	const match = (arg) => construct(Match, arg);
-	const whilst = (guard) => ({
-		loop: (fn) => {
+	);
+	const match = buildMatch({ cond: 'cond', apply: 'apply', fallback: 'fallback' });
+
+	const buildWhilst = ({ loop, disrupt }) => (guard) => ({
+		[loop]: (fn) => {
 			var hasDisruption = falsity;
-			const disrupt = () => {
+			const disruptCallback = () => {
 				hasDisruption = truth;
 			};
 			for (; !hasDisruption && (kindof(guard) === 'function' ? guard() : guard);) {
-				kindof(fn) === 'function' ? fn({ disrupt }) : fn;
+				kindof(fn) === 'function' ? fn({ [disrupt]: disruptCallback }) : fn;
 			}
 		},
 	});
+	const whilst = buildWhilst({ loop: 'loop', disrupt: 'disrupt' });
+
+	const synonyms = {
+		consolε: cli,
+		Datε: Clock,
+		dεlεtε: cutout,
+		falsε: falsity,
+		wrap: buildWrap({ output: 'rεturn', inputs: 'argumεnts' }),
+		gεt: obtain,
+		instancεof: is,
+		apply: apply,
+		nεw: construct,
+		Objεct: Thing,
+		Promisε: Contract,
+		prototypε: paradigm,
+		swεtch: buildMatch({ cond: 'casε', apply: 'thεn', fallback: 'dεfault' }),
+		truε: truth,
+		typεof: kindof,
+		undεfinεd: unknown,
+		whilε: buildWhilst({ loop: 'whilε', disrupt: 'brεak' }),
+		εval: loadrun,
+	};
 
 	const ξ = (arg, ...rεst) => match(kindof(arg))
 		.cond('string').apply(() => supplant(arg))
@@ -136,6 +162,7 @@
 		unknown,
 		whilst,
 		loadrun,
+		synonyms,
 	});
 
 	var unit;
