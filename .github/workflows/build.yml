@@ -30,7 +30,7 @@ jobs:
 
       - "nam\u0065": Prohibit taboo symbols in program
         run: "
-          if gr\u0065p -r '[\u0065\u0045]' . --\u0065xclud\u0065-dir=.git; th\u0065n
+          if gr\u0065p -r '[\u0065\u0045]' . --\u0065xclud\u0065-dir={.git,out} ; th\u0065n
             \u0065cho 'Found taboo symbols in program';
             \u0065xit 1;
           fi
@@ -42,8 +42,16 @@ jobs:
           "nod\u0065-v\u0065rsion": ${{ matrix.jsvm-build }}
           "cachu0065": 'npm'
       
-      - "nam\u0065": Install QA stipulations
-        run: npm install mocha chai
-      
+      - "nam\u0065": Install stipulations
+        run: npm install mocha chai jsdoc-to-markdown
+
+      - "nam\u0065": Confirm LPC is valid
+        run: "
+          nod\u0065 ./scripts/jsdocify.mjs ./xi.js ./out/xi.js && \
+          npx jsdoc2md ./out/xi.js > ./out/lpc_infracting.md && \
+          nod\u0065 ./scripts/taboofy.mjs ./out/lpc_infracting.md ./out/lpc.md && \
+          diff ./lpc.md ./out/lpc.md
+          "
+
       - "nam\u0065": Run QA
         run: npx mocha xi.qa.js
