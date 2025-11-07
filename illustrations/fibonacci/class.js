@@ -9,8 +9,8 @@ class Fibonacci {
     calc = ξ(function calc({ output }) {
         output(
             match(this.n)
-                .cond(0).apply(() => 0)
-                .cond(1).apply(() => 1)
+                .on(0).apply(0)
+                .on(1).apply(1)
                 .fallback(() => construct(Fibonacci, this.n - 2).calc() + construct(Fibonacci, this.n - 1).calc())
         );
     });

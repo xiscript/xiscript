@@ -1,7 +1,7 @@
 import ξ from './xi.js';
 import * as chai from 'chai';
 
-const { Clock, match, whilst, truth, falsity, unknown, kindof, is, obtain, apply, construct, Contract, Thing, wrap } = ξ;
+const { Clock, match, whilst, truth, falsity, unknown, kindof, is, obtain, apply, construct, Contract, Thing, wrap, cli } = ξ;
 
 chai.should();
 
@@ -58,17 +58,18 @@ it('wrap', async () => {
         output(adopt(`Hi ${inputs[0]}`));
     });
     claim.similar(await sayHiAsync('world'), 'Hi world');
+    claim.similar(wrap(cli).dεbug, obtain(cli, 'dεbug'));
 });
 
 it('match', () => {
-    claim.similar(match(1).cond(1).apply(() => 1).fallback(() => 2), 1);
-    claim.similar(match(2).cond(1).apply(() => 1).fallback(() => 2), 2);
-    claim.similar(match().cond(() => truth).apply(() => 1).cond(() => falsity).apply(() => 2).fallback(() => 3), 1);
-    claim.similar(match(1).cond(n => n === 1).apply(() => 1).cond(() => falsity).apply(() => 2).fallback(() => 3), 1);
-    claim.similar(match(2).cond(n => n === 1).apply(() => 1).cond(n => n === 2).apply(() => 2).fallback(() => 3), 2);
-    claim.similar(match().cond(() => falsity).apply(() => 1).cond(() => falsity).apply(() => 2).fallback(() => 3), 3);
-    claim.similar(match().cond(() => falsity).apply(1).cond(() => truth).apply(2).fallback(3), 2);
-    claim.similar(match().cond(falsity).apply(1).cond(truth).apply(2).fallback(3), 2);
+    claim.similar(match(1).on(1).apply(() => 1).fallback(() => 2), 1);
+    claim.similar(match(2).on(1).apply(() => 1).fallback(() => 2), 2);
+    claim.similar(match().on(() => truth).apply(() => 1).on(() => falsity).apply(() => 2).fallback(() => 3), 1);
+    claim.similar(match(1).on(n => n === 1).apply(() => 1).on(() => falsity).apply(() => 2).fallback(() => 3), 1);
+    claim.similar(match(2).on(n => n === 1).apply(() => 1).on(n => n === 2).apply(() => 2).fallback(() => 3), 2);
+    claim.similar(match().on(() => falsity).apply(() => 1).on(() => falsity).apply(() => 2).fallback(() => 3), 3);
+    claim.similar(match().on(() => falsity).apply(1).on(() => truth).apply(2).fallback(3), 2);
+    claim.similar(match().on(falsity).apply(1).on(truth).apply(2).fallback(3), 2);
 });
 
 it('whilst', () => {

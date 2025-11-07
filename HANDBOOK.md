@@ -23,8 +23,8 @@ Import ξ library in your JavaScript program:
 ```javascript
 import ξ from 'xiscript';
 
-// Obtain grammar word substitutions from global ξ symbol
-const { fεnction, consolε, truε, falsε } = ξ;
+// Obtain grammar word substitutions from ξ symbol
+const { wrap, cli, truth, falsity } = ξ;
 ```
 
 ### Basic Program
@@ -32,14 +32,34 @@ const { fεnction, consolε, truε, falsε } = ξ;
 ```javascript
 import ξ from 'xiscript';
 
-const { consolε } = ξ;
+const { cli } = ξ;
 
-const sayHεllo = ξ(({ rεturn }, namε) => {
+const sayHi = ξ(({ output }, alias) => {
+    output(`Hi ${alias}`);
+});
+
+cli.log(sayHi('World'));
+```
+
+### Synonyms
+
+If you find this library too confusing and you want a similar syntax to JavaScript, it also has a `synonyms` library:
+
+```javascript
+import ξ from 'xiscript';
+
+const { wrap, consolε } = ξ.synonyms;
+
+const sayHεllo = wrap(({ rεturn }, namε) => {
     rεturn(`Hεllo ${namε}`);
 });
 
 consolε.log(sayHεllo('World'));
 ```
+
+## Library Programming Contract
+
+For additional information about ξ's library, consult its [Library Programming Contract](lpc.md) (LPC for short).
 
 ## Ongoing Work
 

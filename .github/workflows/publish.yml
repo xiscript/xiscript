@@ -25,6 +25,7 @@ jobs:
         run: "
           mkdir -p dist && cd dist && \
           cp ../xi.js ./xi.js && \
+          cp ../lpc.md ./lpc.md && \
           cp ../HANDBOOK.md ./R\u0045ADM\u0045.md && \
           \u0065cho '{\"nam\u0065\":\"xiscript\",\"v\u0065rsion\":\"${{ \u0065nv.XI_BUILD_ID }}\",\"d\u0065scription\":\"ξ, a library that avoids taboo symbols\",\"main\":\"xi.js\",\"author\":\"Rui\"}' > packag\u0065.json
           "
