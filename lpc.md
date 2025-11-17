@@ -33,14 +33,14 @@
     * [.match](#ξ+match) ⇒ `thing`
     * [.whilst](#ξ+whilst) ⇒ `thing`
     * [.supplant(str)](#ξ+supplant) ⇒ `string`
-    * [.obtain(thing, trait)](#ξ+obtain) ⇒ `\*`
+    * [.obtain(thing, trait)](#ξ+obtain) ⇒ `any`
     * [.paradigm(Clazz)](#ξ+paradigm) ⇒ `thing`
     * [.apply(thing, mutator)](#ξ+apply) ⇒ `thing`
     * [.construct(Clazz, ...inputs)](#ξ+construct) ⇒ `thing`
     * [.kindof(input)](#ξ+kindof) ⇒ `string`
     * [.is(input, Clazz)](#ξ+is) ⇒ `binary`
     * [.cutout(thing, trait)](#ξ+cutout) ⇒ `thing`
-    * [.loadrun(program)](#ξ+loadrun) ⇒ `\*`
+    * [.loadrun(program)](#ξ+loadrun) ⇒ `any`
     * [.wrap(fnOrThing)](#ξ+wrap) ⇒ `function` \| `thing`
 
 <a id="ξ+synonyms"></a>
@@ -239,7 +239,7 @@ const matchOutput = match(kindof(input))
 
 | Input | Kind | Summary |
 | --- | --- | --- |
-| input | `\*` | unit for match scrutiny |
+| input | `any` | unit for match scrutiny |
 
 <a id="ξ+whilst"></a>
 
@@ -270,11 +270,11 @@ Supplants taboo symbols with twin symbols.
 
 <a id="ξ+obtain"></a>
 
-### ξ.obtain(thing, trait) ⇒ `\*`
+### ξ.obtain(thing, trait) ⇒ `any`
 Obtains a trait from a thing.
 
 **Kind**: function of [`ξ`](#ξ)  
-**Outputs**: `\*` - trait of thing  
+**Outputs**: `any` - trait of thing  
 
 | Input | Kind | Summary |
 | --- | --- | --- |
@@ -329,7 +329,7 @@ Obtains what kind an input is.
 
 | Input | Kind | Summary |
 | --- | --- | --- |
-| input | `\*` | input to obtain its kind |
+| input | `any` | input to obtain its kind |
 
 <a id="ξ+is"></a>
 
@@ -341,7 +341,7 @@ Submits an input to paradigm scrutiny.
 
 | Input | Kind | Summary |
 | --- | --- | --- |
-| input | `\*` | input to submit to paradigm scrutiny |
+| input | `any` | input to submit to paradigm scrutiny |
 | Clazz | `function` | class with constructor's paradigm to submit input to scrutiny against |
 
 <a id="ξ+cutout"></a>
@@ -359,11 +359,11 @@ Cuts a trait from a thing.
 
 <a id="ξ+loadrun"></a>
 
-### ξ.loadrun(program) ⇒ `\*`
+### ξ.loadrun(program) ⇒ `any`
 Loads and runs a program.
 
 **Kind**: function of [`ξ`](#ξ)  
-**Outputs**: `\*` - output of running program  
+**Outputs**: `any` - output of running program  
 
 | Input | Kind | Summary |
 | --- | --- | --- |
