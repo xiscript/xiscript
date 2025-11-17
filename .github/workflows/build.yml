@@ -35,7 +35,6 @@ jobs:
         "us\u0065s": "actions/s\u0065tup-nod\u0065@v4"
         with:
           "nod\u0065-v\u0065rsion": ${{ matrix.jsvm-build }}
-          "cachu0065": 'npm'
       
       - "nam\u0065": Install stipulations
         run: npm install mocha chai jsdoc-to-markdown
