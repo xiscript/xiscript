@@ -2,11 +2,6 @@
 
 on:
   push:
-    "branch\u0065s":
-      - main
-  "pull_r\u0065qu\u0065st":
-    "branch\u0065s":
-      - main
 
 jobs:
   build-and-qa:
