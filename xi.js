@@ -53,7 +53,7 @@
 	 * 
 	 * @input {thing} thing to obtain trait from 
 	 * @input {string} trait to obtain from thing. Twin symbols will supplant taboo symbols.
-	 * @outputs {*} trait of thing
+	 * @outputs {any} trait of thing
 	 * @partof ξ#
 	 */
 	const obtain = (thing, trait) => thing[supplant(trait)];
@@ -132,7 +132,7 @@
 	/**
 	 * Obtains what kind an input is.
 	 * 
-	 * @input {*} input input to obtain its kind
+	 * @input {any} input input to obtain its kind
 	 * @outputs {string} kind of input
 	 * @partof ξ#
 	 */
@@ -141,7 +141,7 @@
 	/**
 	 * Submits an input to paradigm scrutiny.
 	 * 
-	 * @input {*} input input to submit to paradigm scrutiny
+	 * @input {any} input input to submit to paradigm scrutiny
 	 * @input {function} Clazz class with constructor's paradigm to submit input to scrutiny against
 	 * @outputs {binary} truth if input contains constructor's paradigm in its paradigm chain, or falsity if not
 	 * @partof ξ#
@@ -171,7 +171,7 @@
 	 * 
 	 * @function
 	 * @input {string} program program to load and run
-	 * @outputs {*} output of running program
+	 * @outputs {any} output of running program
 	 * @partof ξ#
 	 */
 	const loadrun = obtain(globalThis, 'εval');
@@ -244,7 +244,7 @@
 	/**
 	 * Builds a match library programming contract.
 	 * 
-	 * @input {*} input unit for match scrutiny
+	 * @input {any} input unit for match scrutiny
 	 * @outputs {thing} library programming contract with parts:
 	 *  - `on(guard)` mark guard on input; guard may signify constant or function
 	 *  - `apply(fn)` will run if this guard is first to pass; fn may act or carry output
