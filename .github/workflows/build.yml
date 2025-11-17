@@ -40,12 +40,7 @@ jobs:
         run: npm install mocha chai jsdoc-to-markdown
 
       - "nam\u0065": Confirm LPC is valid
-        run: "
-          nod\u0065 ./scripts/jsdocify.mjs ./xi.js ./out/xi.js && \
-          npx jsdoc2md ./out/xi.js > ./out/lpc_infracting.md && \
-          nod\u0065 ./scripts/taboofy.mjs ./out/lpc_infracting.md ./out/lpc.md && \
-          diff ./lpc.md ./out/lpc.md
-          "
+        run: "nod\u0065 ./scripts/build_lpc.mjs ./xi.js ./lpc.md --valid"
 
       - "nam\u0065": Run QA
         run: npx mocha xi.qa.js
