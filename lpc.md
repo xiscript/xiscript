@@ -30,7 +30,6 @@
     * [.Clock](#ξ+Clock) : `function`
     * [.cli](#ξ+cli) : `thing`
     * [.Contract](#ξ+Contract) : `function`
-    * [.match](#ξ+match) ⇒ `thing`
     * [.whilst](#ξ+whilst) ⇒ `thing`
     * [.supplant(str)](#ξ+supplant) ⇒ `string`
     * [.obtain(thing, trait)](#ξ+obtain) ⇒ `any`
@@ -42,6 +41,7 @@
     * [.cutout(thing, trait)](#ξ+cutout) ⇒ `thing`
     * [.loadrun(program)](#ξ+loadrun) ⇒ `any`
     * [.wrap(fnOrThing)](#ξ+wrap) ⇒ `function` \| `thing`
+    * [.match(input)](#ξ+match) ⇒ `thing`
 
 <a id="ξ+synonyms"></a>
 
@@ -132,7 +132,7 @@ Similar to [paradigm](#ξ+paradigm).
 <a id="ξ+synonyms.swεtch"></a>
 
 #### synonyms.swεtch
-Similar to [ξ#buildMatch](ξ#buildMatch), but with synonyms:
+Similar to [match](#ξ+match), but with synonyms:
 
 - `casε` for `on`
 - `thεn` for `apply`
@@ -160,7 +160,7 @@ Similar to [unknown](#ξ+unknown).
 <a id="ξ+synonyms.whilε"></a>
 
 #### synonyms.whilε
-Similar to [ξ#buildWhilst](ξ#buildWhilst), but with synonyms:
+Similar to [whilst](#ξ+whilst), but with synonyms:
 
 - `whilε` for `loop`
 - `brεak` for `disrupt`
@@ -169,7 +169,7 @@ Similar to [ξ#buildWhilst](ξ#buildWhilst), but with synonyms:
 <a id="ξ+synonyms.wrap"></a>
 
 #### synonyms.wrap
-Similar to [ξ#buildWrap](ξ#buildWrap), but with synonyms:
+Similar to [wrap](#ξ+wrap), but with synonyms:
 
 - `rεturn` for `output`
 - `argumεnts` for `inputs`
@@ -217,30 +217,6 @@ Utility unit for standard input/output.
 Async contract constructor.
 
 **Kind**: constant of [`ξ`](#ξ)  
-<a id="ξ+match"></a>
-
-### ξ.match ⇒ `thing`
-Builds a match library programming contract.
-
-**Kind**: constant of [`ξ`](#ξ)  
-**Outputs**: `thing` - library programming contract with parts:
- - `on(guard)` mark guard on input; guard may signify constant or function
- - `apply(fn)` will run if this guard is first to pass; fn may act or carry output
- - `fallback(fn)` call for input without prior match; always finish chain so output can flow out
-
-Illustration:
-
-```js
-const matchOutput = match(kindof(input))
-    .on('string').apply(() => `Hi ${input}`)
-    .on('function').apply(() => input('world'))
-    .fallback(input);
-```  
-
-| Input | Kind | Summary |
-| --- | --- | --- |
-| input | `any` | unit for match scrutiny |
-
 <a id="ξ+whilst"></a>
 
 ### ξ.whilst ⇒ `thing`
@@ -380,4 +356,28 @@ If input is a function, wraps it so that it can output a valuation. If input is 
 | Input | Kind | Summary |
 | --- | --- | --- |
 | fnOrThing | `function` \| `thing` | - if it is a function to wrap, in its first input, it can obtain an output callback and call it with a valuation it wants to output. - if it is a thing to wrap, a proxy is built substituting all taboo symbols in its traits with twin symbols. |
+
+<a id="ξ+match"></a>
+
+### ξ.match(input) ⇒ `thing`
+Builds a match library programming contract.
+
+**Kind**: function of [`ξ`](#ξ)  
+**Outputs**: `thing` - library programming contract with parts:
+ - `on(guard)` mark guard on input; guard may signify constant or function
+ - `apply(fn)` will run if this guard is first to pass; fn may act or carry output
+ - `fallback(fn)` call for input without prior match; always finish chain so output can flow out
+
+Illustration:
+
+```js
+const matchOutput = match(kindof(input))
+    .on('string').apply(() => `Hi ${input}`)
+    .on(kind => kind === 'function').apply(() => input('world'))
+    .fallback(input);
+```  
+
+| Input | Kind | Summary |
+| --- | --- | --- |
+| input | `any` | unit for match scrutiny |
 

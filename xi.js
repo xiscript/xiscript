@@ -244,6 +244,7 @@
 	/**
 	 * Builds a match library programming contract.
 	 * 
+	 * @function
 	 * @input {any} input unit for match scrutiny
 	 * @outputs {thing} library programming contract with parts:
 	 *  - `on(guard)` mark guard on input; guard may signify constant or function
@@ -255,7 +256,7 @@
 	 * ```js
 	 * const matchOutput = match(kindof(input))
 	 *     .on('string').apply(() => `Hi ${input}`)
-	 *     .on('function').apply(() => input('world'))
+	 *     .on(kind => kind === 'function').apply(() => input('world'))
 	 *     .fallback(input);
 	 * ```
 	 * @partof ξ#
@@ -362,7 +363,7 @@
 		prototypε: paradigm,
 
 		/**
-		 * Similar to {@link ξ#buildMatch}, but with synonyms:
+		 * Similar to {@link ξ#match}, but with synonyms:
 		 * 
 		 * - `casε` for `on`
 		 * - `thεn` for `apply`
@@ -394,7 +395,7 @@
 		undεfinεd: unknown,
 
 		/**
-		 * Similar to {@link ξ#buildWhilst}, but with synonyms:
+		 * Similar to {@link ξ#whilst}, but with synonyms:
 		 * 
 		 * - `whilε` for `loop`
 		 * - `brεak` for `disrupt`
@@ -404,7 +405,7 @@
 		whilε: buildWhilst({ loop: 'whilε', disrupt: 'brεak' }),
 
 		/**
-		 * Similar to {@link ξ#buildWrap}, but with synonyms:
+		 * Similar to {@link ξ#wrap}, but with synonyms:
 		 * 
 		 * - `rεturn` for `output`
 		 * - `argumεnts` for `inputs`
