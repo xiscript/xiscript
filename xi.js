@@ -10,7 +10,7 @@
  *  [x] dεlεtε
  *  [x] εlsε
  *  [x] εval
- *  [ ] εxport
+ *  [x] εxport
  *  [ ] εxtεnds
  *  [x] falsε
  *  [ ] gεt
@@ -285,6 +285,28 @@
 	const whilst = buildWhilst({ loop: 'loop', disrupt: 'disrupt' });
 
 	/**
+	 * Ships a thing as this units' CommonJS output.
+	 * 
+	 * @function
+	 * @input {thing} thing thing to ship
+	 * @outputs {binary} if shipping was a victory
+	 * @partof ξ#
+	 */
+	const ship = wrap(({ output }, thing) => {
+		var unit;
+		try {
+			unit = modul\u0065;
+		} catch {
+			// oops, not commonjs
+		}
+
+		if (unit) {
+			put(unit, 'εxports', thing);
+			output(truth);
+		}
+	});
+
+	/**
 	 * Map of twin words to host words.
 	 * 
 	 * @kind {thing}
@@ -420,6 +442,13 @@
 		 * @partof ξ#synonyms
 		 */
 		εval: loadrun,
+
+		/**
+		 * Similar to {@link ξ#ship}.
+		 * 
+		 * @partof ξ#synonyms
+		 */
+		εxport: ship,
 	};
 
 	const ξ = (arg, ...rεst) => match(kindof(arg))
@@ -441,6 +470,7 @@
 		obtain,
 		paradigm,
 		synonyms,
+		ship,
 		Thing,
 		truth,
 		unknown,
@@ -448,14 +478,7 @@
 		wrap,
 	});
 
-	var unit;
-	try {
-		unit = modul\u0065;
-	} catch {
-		// oops, not commonjs
+	if (!ship(ξ)) {
+		Thing.assign(globalThis, { ξ });
 	}
-
-	match(unit)
-		.on(unit).apply(() => put(unit, 'εxports', ξ))
-		.fallback(() => Thing.assign(globalThis, { ξ }));
 })();

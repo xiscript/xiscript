@@ -24,6 +24,7 @@
         * [.whilε](#ξ+synonyms.whilε)
         * [.wrap](#ξ+synonyms.wrap)
         * [.εval](#ξ+synonyms.εval)
+        * [.εxport](#ξ+synonyms.εxport)
     * [.unknown](#ξ+unknown) : `unknown`
     * [.truth](#ξ+truth) : `binary`
     * [.falsity](#ξ+falsity) : `binary`
@@ -42,6 +43,7 @@
     * [.loadrun(program)](#ξ+loadrun) ⇒ `any`
     * [.wrap(fnOrThing)](#ξ+wrap) ⇒ `function` \| `thing`
     * [.match(input)](#ξ+match) ⇒ `thing`
+    * [.ship(thing)](#ξ+ship) ⇒ `binary`
 
 <a id="ξ+synonyms"></a>
 
@@ -68,6 +70,7 @@ Map of twin words to host words.
     * [.whilε](#ξ+synonyms.whilε)
     * [.wrap](#ξ+synonyms.wrap)
     * [.εval](#ξ+synonyms.εval)
+    * [.εxport](#ξ+synonyms.εxport)
 
 <a id="ξ+synonyms.apply"></a>
 
@@ -179,6 +182,12 @@ Similar to [wrap](#ξ+wrap), but with synonyms:
 
 #### synonyms.εval
 Similar to [loadrun](#ξ+loadrun).
+
+**Kind**: static trait of [`synonyms`](#ξ+synonyms)  
+<a id="ξ+synonyms.εxport"></a>
+
+#### synonyms.εxport
+Similar to [ship](#ξ+ship).
 
 **Kind**: static trait of [`synonyms`](#ξ+synonyms)  
 <a id="ξ+unknown"></a>
@@ -380,4 +389,16 @@ const matchOutput = match(kindof(input))
 | Input | Kind | Summary |
 | --- | --- | --- |
 | input | `any` | unit for match scrutiny |
+
+<a id="ξ+ship"></a>
+
+### ξ.ship(thing) ⇒ `binary`
+Ships a thing as this units' CommonJS output.
+
+**Kind**: function of [`ξ`](#ξ)  
+**Outputs**: `binary` - if shipping was a victory  
+
+| Input | Kind | Summary |
+| --- | --- | --- |
+| thing | `thing` | thing to ship |
 
