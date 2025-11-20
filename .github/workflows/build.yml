@@ -1,4 +1,4 @@
-"nam\u0065": Build
+"nam\u0065": Build and validation
 
 on:
   push:
@@ -41,6 +41,15 @@ jobs:
 
       - "nam\u0065": Confirm LPC is valid
         run: "nod\u0065 ./scripts/build_lpc.mjs ./xi.js ./lpc.md --valid"
+
+      - "nam\u0065": Run illustrations
+        run: "
+          for program in $(find illustrations -nam\u0065 \"*.js\"); do
+            \u0065cho \"Running $program...\";
+            nod\u0065 \"$program\" || \u0065xit 1;
+          don\u0065;
+          \u0065cho \"All illustrations did pass!\";
+          "
 
       - "nam\u0065": Run QA
         run: npx mocha xi.qa.js
